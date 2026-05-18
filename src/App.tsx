@@ -5,13 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import NotFound from "./pages/NotFound.tsx";
-import RequesterDashboard from "./pages/requester/Dashboard.tsx";
-import RequesterBrowse from "./pages/requester/Browse.tsx";
-import RequesterBookings from "./pages/requester/Bookings.tsx";
-import RequesterEnquiries from "./pages/requester/Enquiries.tsx";
-import RequesterWishlist from "./pages/requester/Wishlist.tsx";
-import RequesterProfile from "./pages/requester/Profile.tsx";
-import RequesterSupport from "./pages/requester/Support.tsx";
+import Rsvp from "./pages/Rsvp.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,15 +16,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RequesterDashboard />} />
-          <Route path="/requester" element={<RequesterDashboard />} />
-          <Route path="/requester/browse" element={<RequesterBrowse />} />
-          <Route path="/requester/bookings" element={<RequesterBookings />} />
-          <Route path="/requester/enquiries" element={<RequesterEnquiries />} />
-          <Route path="/requester/wishlist" element={<RequesterWishlist />} />
-          <Route path="/requester/profile" element={<RequesterProfile />} />
-          <Route path="/requester/support" element={<RequesterSupport />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/" element={<Rsvp />} />
+          <Route path="/rsvp/:token" element={<Rsvp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
