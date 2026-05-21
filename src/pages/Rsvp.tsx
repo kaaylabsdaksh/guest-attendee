@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Calendar, Clock, MapPin, User, Sparkles, Check, X, CalendarPlus, Pencil, Lock } from "lucide-react";
+import { Calendar, Clock, MapPin, User, Sparkles, Check, X, CalendarPlus, Pencil, Lock, AlertCircle } from "lucide-react";
 import banner from "@/assets/event-banner.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
