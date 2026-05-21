@@ -180,7 +180,10 @@ export default function Rsvp() {
                   placeholder="Travelling, prior engagement, etc."
                 />
               </Field>
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <p className="mt-4 text-center text-[11px] text-muted-foreground">
+                RSVP deadline: {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+              </p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                 <Button variant="ghost" className="sm:flex-1" onClick={() => setStep("invitation")}>
                   Back
                 </Button>
