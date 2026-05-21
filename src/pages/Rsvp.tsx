@@ -46,6 +46,10 @@ export default function Rsvp() {
     []
   );
 
+  const isPastDeadline = useMemo(() => {
+    return new Date() > invitation.deadlineDate;
+  }, []);
+
   const submitAccept = () => {
     if (!consent) {
       toast.error("Please confirm consent to continue.");
