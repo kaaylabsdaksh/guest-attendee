@@ -222,18 +222,21 @@ export default function Rsvp() {
 
                 {!isPastDeadline ? (
                   <>
+                    <p className="mt-3 text-[11px] text-muted-foreground">
+                      You can edit until {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.
+                    </p>
                     <button
                       onClick={() => {
                         setStep("accept");
                         setEditing(true);
                       }}
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                      className="mt-2 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
                     >
                       <Pencil className="h-3.5 w-3.5" /> Edit my response
                     </button>
                     {editing && (
                       <p className="mt-2 text-[11px] text-muted-foreground">
-                        You can edit until the RSVP deadline.
+                        Make your changes below.
                       </p>
                     )}
                   </>
