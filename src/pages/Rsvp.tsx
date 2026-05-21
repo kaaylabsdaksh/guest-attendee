@@ -156,7 +156,10 @@ export default function Rsvp() {
                   </span>
                 </label>
               </div>
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <p className="mt-4 text-center text-[11px] text-muted-foreground">
+                RSVP deadline: {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+              </p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                 <Button variant="ghost" className="sm:flex-1" onClick={() => setStep("invitation")}>
                   Back
                 </Button>
@@ -177,7 +180,10 @@ export default function Rsvp() {
                   placeholder="Travelling, prior engagement, etc."
                 />
               </Field>
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <p className="mt-4 text-center text-[11px] text-muted-foreground">
+                RSVP deadline: {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+              </p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                 <Button variant="ghost" className="sm:flex-1" onClick={() => setStep("invitation")}>
                   Back
                 </Button>
@@ -222,18 +228,21 @@ export default function Rsvp() {
 
                 {!isPastDeadline ? (
                   <>
+                    <p className="mt-3 text-[11px] text-muted-foreground">
+                      You can edit until {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.
+                    </p>
                     <button
                       onClick={() => {
                         setStep("accept");
                         setEditing(true);
                       }}
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                      className="mt-2 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
                     >
                       <Pencil className="h-3.5 w-3.5" /> Edit my response
                     </button>
                     {editing && (
                       <p className="mt-2 text-[11px] text-muted-foreground">
-                        You can edit until the RSVP deadline.
+                        Make your changes below.
                       </p>
                     )}
                   </>
@@ -267,12 +276,17 @@ export default function Rsvp() {
                 )}
 
                 {!isPastDeadline ? (
-                  <button
-                    onClick={() => setStep("invitation")}
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                  >
-                    <Pencil className="h-3.5 w-3.5" /> Change my response
-                  </button>
+                  <>
+                    <p className="mt-5 text-[11px] text-muted-foreground">
+                      You can change your response until {invitation.deadlineDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.
+                    </p>
+                    <button
+                      onClick={() => setStep("invitation")}
+                      className="mt-2 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> Change my response
+                    </button>
+                  </>
                 ) : (
                   <p className="mt-5 text-[11px] text-muted-foreground">
                     Response locked — deadline passed.
