@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Calendar, Clock, MapPin, User, Sparkles, Check, X, CalendarPlus, Pencil, Lock } from "lucide-react";
+import { Calendar, Clock, MapPin, User, Sparkles, Check, X, CalendarPlus, Pencil, Lock, AlertCircle } from "lucide-react";
 import banner from "@/assets/event-banner.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,7 @@ const invitation = {
   description:
     "Join us for an intimate evening of dinner, music and celebration beneath the chandeliers of Aurora Hall.",
   deadline: "Replies kindly requested by 1 June 2026",
+  deadlineDate: new Date("2026-06-01T23:59:59"),
   brand: "Whitford & Co.",
 };
 
@@ -44,6 +45,10 @@ export default function Rsvp() {
     () => invitation.guestName.split(" ").map((s) => s[0]).join("").slice(0, 2),
     []
   );
+
+  const isPastDeadline = useMemo(() => {
+    return new Date() > invitation.deadlineDate;
+  }, []);
 
   const submitAccept = () => {
     if (!consent) {
@@ -194,6 +199,15 @@ export default function Rsvp() {
                   We've sent a confirmation to your email.
                 </p>
 
+                {isPastDeadline && (
+                  <div className="mt-4 flex w-full items-center gap-2 rounded-2xl bg-muted/60 p-3 text-left">
+                    <AlertCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground">
+                      The RSVP deadline has passed. Your response is now locked.
+                    </p>
+                  </div>
+                )}
+
                 <div className="mt-5 w-full rounded-2xl bg-muted/60 p-4 text-left">
                   <p className="text-sm font-medium">{invitation.eventName}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
@@ -205,18 +219,27 @@ export default function Rsvp() {
                 <Button className="mt-5 h-12 w-full rounded-2xl">
                   <CalendarPlus className="mr-2 h-4 w-4" /> Add to calendar
                 </Button>
-                <button
-                  onClick={() => {
-                    setStep("accept");
-                    setEditing(true);
-                  }}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                >
-                  <Pencil className="h-3.5 w-3.5" /> Edit my response
-                </button>
-                {editing && (
-                  <p className="mt-2 text-[11px] text-muted-foreground">
-                    You can edit until the RSVP deadline.
+
+                {!isPastDeadline ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setStep("accept");
+                        setEditing(true);
+                      }}
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> Edit my response
+                    </button>
+                    {editing && (
+                      <p className="mt-2 text-[11px] text-muted-foreground">
+                        You can edit until the RSVP deadline.
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="mt-3 text-[11px] text-muted-foreground">
+                    Response locked — deadline passed.
                   </p>
                 )}
               </div>
@@ -233,12 +256,28 @@ export default function Rsvp() {
                 <p className="mt-1 max-w-xs text-sm text-muted-foreground">
                   We've passed your reply on to {invitation.host.split(" ")[0]}. You're missed already.
                 </p>
-                <button
-                  onClick={() => setStep("invitation")}
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                >
-                  <Pencil className="h-3.5 w-3.5" /> Change my response
-                </button>
+
+                {isPastDeadline && (
+                  <div className="mt-4 flex w-full items-center gap-2 rounded-2xl bg-muted/60 p-3 text-left">
+                    <AlertCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground">
+                      The RSVP deadline has passed. Your response is now locked.
+                    </p>
+                  </div>
+                )}
+
+                {!isPastDeadline ? (
+                  <button
+                    onClick={() => setStep("invitation")}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                  >
+                    <Pencil className="h-3.5 w-3.5" /> Change my response
+                  </button>
+                ) : (
+                  <p className="mt-5 text-[11px] text-muted-foreground">
+                    Response locked — deadline passed.
+                  </p>
+                )}
               </div>
             </Card>
           )}
