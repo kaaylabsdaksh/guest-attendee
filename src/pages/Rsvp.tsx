@@ -199,6 +199,15 @@ export default function Rsvp() {
                   We've sent a confirmation to your email.
                 </p>
 
+                {isPastDeadline && (
+                  <div className="mt-4 flex w-full items-center gap-2 rounded-2xl bg-muted/60 p-3 text-left">
+                    <AlertCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground">
+                      The RSVP deadline has passed. Your response is now locked.
+                    </p>
+                  </div>
+                )}
+
                 <div className="mt-5 w-full rounded-2xl bg-muted/60 p-4 text-left">
                   <p className="text-sm font-medium">{invitation.eventName}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
@@ -210,18 +219,27 @@ export default function Rsvp() {
                 <Button className="mt-5 h-12 w-full rounded-2xl">
                   <CalendarPlus className="mr-2 h-4 w-4" /> Add to calendar
                 </Button>
-                <button
-                  onClick={() => {
-                    setStep("accept");
-                    setEditing(true);
-                  }}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                >
-                  <Pencil className="h-3.5 w-3.5" /> Edit my response
-                </button>
-                {editing && (
-                  <p className="mt-2 text-[11px] text-muted-foreground">
-                    You can edit until the RSVP deadline.
+
+                {!isPastDeadline ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setStep("accept");
+                        setEditing(true);
+                      }}
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> Edit my response
+                    </button>
+                    {editing && (
+                      <p className="mt-2 text-[11px] text-muted-foreground">
+                        You can edit until the RSVP deadline.
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="mt-3 text-[11px] text-muted-foreground">
+                    Response locked — deadline passed.
                   </p>
                 )}
               </div>
