@@ -24,7 +24,7 @@ const invitation = {
   description:
     "Join us for an intimate evening of dinner, music and celebration beneath the chandeliers of Aurora Hall.",
   deadline: "Replies kindly requested by 1 June 2026",
-  deadlineDate: new Date("2026-06-01T23:59:59"),
+  deadlineDate: new Date("2025-01-01T23:59:59"),
   brand: "Whitford & Co.",
 };
 
